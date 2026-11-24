@@ -11,6 +11,7 @@ type Pair struct {
 
 func TopN(freq map[string]int, n int) []Pair {
 
+	// nil map can be read 0_0
 	if n <= 0 {
 		return []Pair{}
 	}
@@ -23,6 +24,7 @@ func TopN(freq map[string]int, n int) []Pair {
 			Count: v,
 		})
 	}
+
 	sort.Slice(res, func(i, j int) bool {
 		if ok := res[i].Count > res[j].Count; ok {
 			return true
