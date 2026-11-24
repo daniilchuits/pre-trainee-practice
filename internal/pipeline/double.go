@@ -10,7 +10,7 @@ func Double(in []int) []int {
 
 	res := make([]int, len(in))
 	for i := range in {
-		res = append(res, in[i]*2)
+		res[i] = (in[i]) * 2
 	}
 	return res
 }
