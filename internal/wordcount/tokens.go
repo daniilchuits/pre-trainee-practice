@@ -14,6 +14,7 @@ func Tokens(s string) []string {
 
 	for _, r := range s {
 		if unicode.IsLetter(r) || unicode.IsDigit(r) {
+			r = unicode.ToLower(r)
 			sb.WriteRune(r)
 		} else {
 			if sb.Len() != 0 {
