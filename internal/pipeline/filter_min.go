@@ -8,7 +8,7 @@ func FilterMin(in []int, min int) []int {
 		return []int{}
 	}
 
-	res := make([]int, len(in))
+	res := []int{}
 	for i := range in {
 		if in[i] >= min {
 			res = append(res, in[i])
