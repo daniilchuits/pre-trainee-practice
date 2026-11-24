@@ -13,5 +13,6 @@ func main() {
 	for i, str := range strs {
 		fmt.Printf("№%d: %s\n", i, str)
 	}
-	fmt.Println(wordcount.Count(strs))
+	freq := wordcount.Count(strs)
+	fmt.Println(wordcount.TopN(freq, 100))
 }
