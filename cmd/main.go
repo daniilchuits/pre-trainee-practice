@@ -13,4 +13,5 @@ func main() {
 	for i, str := range strs {
 		fmt.Printf("№%d: %s\n", i, str)
 	}
+	fmt.Println(wordcount.Count(strs))
 }
