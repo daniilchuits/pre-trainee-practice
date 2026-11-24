@@ -1,12 +1,13 @@
 package wordcount
 
-func DropStop(pairs []Pair) []Pair {
+func DropStop(words []string) []string {
 
-	res := make([]Pair, 0, len(pairs))
+	res := make([]string, 0, len(words))
 
-	for i := range pairs {
-		if ok := isStopWord(pairs[i].Word, stopWords); !ok {
-			res = append(res, pairs[i])
+	for i := range words {
+
+		if _, ok := stopWords[words[i]]; !ok {
+			res = append(res, words[i])
 		}
 	}
 	return res
