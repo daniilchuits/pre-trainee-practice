@@ -33,7 +33,16 @@ func main() {
 		return
 	}
 
-	sum := accesslog.Summarize(s, 100)
-	fmt.Print(sum)
+	// sum := accesslog.Summarize(s, 3)
+	_ = s
+
+	// cases := []string{
+	// 	"203.0.113.10 GET /x 99x 1",
+	// 	"",
+	// }
+	// for _, tt := range cases {
+	// 	fmt.Println(accesslog.Summarize(tt, 10))
+	// 	fmt.Println()
+	// }
 
 }
