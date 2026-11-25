@@ -8,6 +8,9 @@ import (
 func ParseLine(s string) (Line, bool) {
 
 	s = strings.TrimSpace(s)
+	if s[0] == '#' {
+		return Line{}, false
+	}
 	parts := strings.Fields(s)
 	if len(parts) != 5 {
 		return Line{}, false

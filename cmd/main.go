@@ -23,7 +23,16 @@ func main() {
 
 	_ = pairs
 
-	s = "203.0.113.10 GET /api/books 200 142\n"
+	// for _, pair := range pairs {
+	// 	fmt.Printf("Word: %s Count: %d\n", pair.Word, pair.Count)
+	// }
+
+	s, err = accesslog.TestDataText()
+	if err != nil {
+		fmt.Fprint(os.Stderr, err)
+		return
+	}
+
 	sum := accesslog.Summarize(s, 100)
 	fmt.Print(sum)
 

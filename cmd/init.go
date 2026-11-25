@@ -13,7 +13,9 @@ func init() {
 		log.Panicln("'.env' is not loaded:", err)
 	}
 
-	if os.Getenv("TESTDATA_FILEPATH") == "" {
-		log.Panic("Empty variable 'TESTDATA_FILEPATH' in .env")
+	if os.Getenv("TESTDATA_FILEPATH_WORDS") == "" {
+		log.Panic("Empty variable 'TESTDATA_FILEPATH_WORDS' in .env")
+	} else if os.Getenv("TESTDATA_FILEPATH_ACCESS") == "" {
+		log.Panic("Empty variable 'TESTDATA_FILEPATH_ACCESS' in .env")
 	}
 }
