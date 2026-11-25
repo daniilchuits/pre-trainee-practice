@@ -17,12 +17,17 @@ func Summarize(text string, topN int) Summary {
 
 	lines := strings.Split(text, "\n") // splits by newline-separater, so each line == log-line
 
-	for i := range lines {
+	for i := 0; i < len(lines); i++ {
 		line, ok := ParseLine(lines[i])
 		if !ok {
 			sum.Skipped++
 			continue
 		}
+		var emptyLine Line
+		if line == emptyLine {
+			continue
+		}
+
 		sum.Parsed++
 
 		if _, ok := seenIPs[line.IP]; !ok {
@@ -56,6 +61,7 @@ func Summarize(text string, topN int) Summary {
 		return false
 	})
 
-	sum.TopPaths = paths[:min(len(paths), topN)]
+	topN = min(len(paths), topN)
+	sum.TopPaths = paths[:topN]
 	return sum
 }
