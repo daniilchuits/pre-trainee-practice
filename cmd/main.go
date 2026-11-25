@@ -23,7 +23,8 @@ func main() {
 
 	_ = pairs
 
-	line, ok := accesslog.ParseLine("203.0.113.10 GET /api/books 200 142")
-	fmt.Print(line, ok)
+	s = "203.0.113.10 GET /api/books 200 142\n"
+	sum := accesslog.Summarize(s, 100)
+	fmt.Print(sum)
 
 }

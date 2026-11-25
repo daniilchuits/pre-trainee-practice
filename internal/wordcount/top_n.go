@@ -34,7 +34,6 @@ func TopN(freq map[string]int, n int) []Pair {
 			if res[i].Word < res[j].Word {
 				return true
 			}
-			return false
 		}
 		return false
 	})
