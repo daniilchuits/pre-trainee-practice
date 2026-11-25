@@ -3,7 +3,7 @@ package booking
 import "errors"
 
 type Room struct {
-	ID   int
+	ID   string
 	Name string
 }
 
