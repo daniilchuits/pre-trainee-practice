@@ -6,7 +6,7 @@ import (
 
 func TestDataText() (string, error) {
 
-	b, err := os.ReadFile(os.Getenv("TESTDATA_FILEPATH"))
+	b, err := os.ReadFile(os.Getenv("TESTDATA_FILEPATH_WORDS"))
 	if err != nil {
 		return "", err
 	}
