@@ -19,7 +19,7 @@ func (s *Service) AddRoom(id, name string) error {
 
 	for _, room := range s.rooms {
 		if room.ID == id {
-			return fmt.Errorf("%w: duplicate id", ErrInvalid)
+			return fmt.Errorf("Error %w: duplicate id: %s", ErrInvalid, id)
 		}
 	}
 	s.rooms = append(s.rooms, Room{ID: id, Name: name})

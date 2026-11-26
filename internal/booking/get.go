@@ -1,5 +1,7 @@
 package booking
 
+import "fmt"
+
 func (s *Service) Get(reservationID string) (Reservation, error) {
 
 	for _, reserv := range s.reservations {
@@ -7,5 +9,8 @@ func (s *Service) Get(reservationID string) (Reservation, error) {
 			return reserv, nil
 		}
 	}
-	return Reservation{}, ErrNotFound
+	return Reservation{}, fmt.Errorf(
+		"Error %w: reservation-id=%s",
+		ErrNotFound, reservationID,
+	)
 }
