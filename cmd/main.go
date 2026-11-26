@@ -14,6 +14,9 @@ func main() {
 	// they wouldn't have saved me all the time
 	// but they would have saved a large part of it
 
+	// and I understood on practise how important is
+	// to use correct data structure
+
 	s := booking.NewService()
 	if err := s.AddRoom("", "x"); err != nil {
 		if !errors.Is(err, booking.ErrInvalid) {

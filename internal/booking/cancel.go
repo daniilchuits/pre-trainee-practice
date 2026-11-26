@@ -4,14 +4,12 @@ import "fmt"
 
 func (s *Service) Cancel(reservationID string) error {
 
-	for i, reserv := range s.reservations {
-		if reserv.ID == reservationID {
-			if reserv.Cancelled {
-				return fmt.Errorf("Error %w: reservation-id=%s", ErrCancelled, reservationID)
-			}
-			s.reservations[i].Cancelled = true
-			return nil
-		}
+	reservation, ok := s.reservations[reservationID]
+	if !ok {
+		return fmt.Errorf("Error %w: reservation-id=%s", ErrCancelled, reservationID)
 	}
-	return fmt.Errorf("Error %w: reservation-id=%s", ErrNotFound, reservationID)
+	if reservation.Cancelled {
+		return fmt.Errorf("Error %w: reservation-id=%s", ErrNotFound, reservationID)
+	}
+	return nil
 }

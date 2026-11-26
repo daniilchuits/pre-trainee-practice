@@ -8,8 +8,8 @@ type Room struct {
 }
 
 type Service struct {
-	rooms        []Room
-	reservations []Reservation
+	rooms        map[string]Room        // <room-id>:<Room>
+	reservations map[string]Reservation //	<reservation-id>:<Reservation>
 }
 
 func NewService() *Service {

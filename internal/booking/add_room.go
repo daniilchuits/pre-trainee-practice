@@ -21,6 +21,9 @@ func (s *Service) AddRoom(id, name string) error {
 			return fmt.Errorf("Error %w: duplicate id: %s", ErrInvalid, id)
 		}
 	}
-	s.rooms = append(s.rooms, Room{ID: id, Name: name})
+	s.rooms[name] = Room{
+		ID:   id,
+		Name: name,
+	}
 	return nil
 }
