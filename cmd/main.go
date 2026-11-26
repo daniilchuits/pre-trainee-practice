@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 
 	"github.com/daniilchuits/pre-trainee-practice/internal/report"
@@ -9,20 +8,14 @@ import (
 
 func main() {
 
-	recs := []report.Record{{SKU: "A-1", Qty: 2, PriceCents: 199}, {SKU: "B-9", Qty: 1, PriceCents: 50}}
+	recs := []report.Record{{SKU: "qwe", Qty: 1, PriceCents: 5}}
 	_ = recs
 
-	j := report.JSONExporter{}
-	b, err := j.Export(nil)
-	if err != nil {
-		log.Fatal(err)
-	}
-	fmt.Println(string(b))
+	j1 := report.JSONExporter{}
 
-	c := report.CSVExporter{}
-	b, err = c.Export(nil)
+	b, err := j1.Export(nil)
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println(string(b))
+	log.Println(string(b))
 }

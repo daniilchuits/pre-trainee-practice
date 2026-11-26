@@ -1,5 +1,7 @@
 package report
 
+import "errors"
+
 func RenderAll(records []Record, exporters []Exporter) (map[string][]byte, error) {
 
 	recMap := make(map[string][]byte)
@@ -20,7 +22,7 @@ func RenderAll(records []Record, exporters []Exporter) (map[string][]byte, error
 		if !ok {
 
 			if foundJson {
-				continue
+				return nil, errors.New("Two json exporters")
 			}
 			csvBytes, err := ex.Export(records)
 			if err != nil {
@@ -31,7 +33,7 @@ func RenderAll(records []Record, exporters []Exporter) (map[string][]byte, error
 		} else {
 
 			if foundCsv {
-				continue
+				return nil, errors.New("Two csv exporters")
 			}
 			jsonBytes, err := ex.Export(records)
 			if err != nil {
