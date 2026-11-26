@@ -21,6 +21,13 @@ func (JSONExporter) Export(records []Record) ([]byte, error) {
 	var jsonRecords []jsonRecord
 
 	for i := range records {
+		_, err := recordValidation(records[i])
+		if err != nil {
+			return nil, fmt.Errorf(
+				"%w | record №%d",
+				err, i+1,
+			)
+		}
 		jsonRecords = append(jsonRecords, jsonRecord{
 			SKU:        records[i].SKU,
 			Qty:        records[i].Qty,

@@ -28,12 +28,19 @@ func (c CSVExporter) Export(records []Record) ([]byte, error) {
 
 	w.Comma = sep
 
-	for _, rec := range records {
+	for i := range records {
+		lineCents, err := recordValidation(records[i])
+		if err != nil {
+			return nil, fmt.Errorf(
+				"%w | record №%d",
+				err, i+1,
+			)
+		}
 		w.Write([]string{
-			rec.SKU,
-			strconv.Itoa(rec.Qty),
-			strconv.Itoa(rec.PriceCents),
-			strconv.Itoa(rec.Qty * rec.PriceCents),
+			records[i].SKU,
+			strconv.Itoa(records[i].Qty),
+			strconv.Itoa(records[i].PriceCents),
+			lineCents,
 		},
 		)
 	}
