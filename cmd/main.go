@@ -12,7 +12,7 @@ func main() {
 	s := booking.NewService()
 	s.AddRoom("orion", "Orion")
 
-	_, err := s.Book("orion", 9, 11) // ok
+	a, err := s.Book("orion", 9, 11) // ok
 	if err != nil {
 		log.Fatalln(1, err)
 	}
@@ -25,11 +25,15 @@ func main() {
 		log.Fatalln(3, err)
 	}
 
-	fmt.Println(s)
-
-	_, err = s.Book("orion", 9, 10) // fatal
-	if err != nil {
+	if err = s.Cancel(a.ID); err != nil {
 		log.Fatalln(4, err)
 	}
+
+	_, err = s.Book("orion", 9, 10) // ok
+	if err != nil {
+		log.Fatalln(5, err)
+	}
+
+	fmt.Println(s)
 
 }
