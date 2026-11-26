@@ -1,7 +1,6 @@
 package booking
 
 import (
-	"errors"
 	"fmt"
 	"strings"
 )
@@ -10,11 +9,11 @@ func (s *Service) AddRoom(id, name string) error {
 
 	id = strings.TrimSpace(id)
 	if id == "" {
-		return errors.New("Empty 'id' after trim")
+		return fmt.Errorf("Error %w empty 'id' after trim", ErrInvalid)
 	}
 	name = strings.TrimSpace(name)
 	if name == "" {
-		return errors.New("Empty 'name' after trim")
+		return fmt.Errorf("Error %w empty 'name' after trim", ErrInvalid)
 	}
 
 	for _, room := range s.rooms {

@@ -12,7 +12,7 @@ func (s *Service) ListRoom(roomID string) ([]Reservation, error) {
 	}
 	if len(reservations) == 0 {
 		return nil, fmt.Errorf(
-			"Error %v; room-id=%s",
+			"Error %w; room-id=%s",
 			ErrNotFound, roomID,
 		)
 	}
