@@ -1,9 +1,8 @@
 package booking
 
 import (
-	"crypto/sha256"
-	"encoding/hex"
 	"fmt"
+	"strconv"
 )
 
 const (
@@ -14,8 +13,8 @@ const (
 func (s *Service) Book(roomID string, start, end int) (Reservation, error) {
 
 	found := false
-	for _, room := range s.rooms {
-		if room.ID == roomID {
+	for id := range s.rooms {
+		if id == roomID {
 			found = true
 			break
 		}
@@ -40,24 +39,21 @@ func (s *Service) Book(roomID string, start, end int) (Reservation, error) {
 		}
 	}
 
-	var lastID string
-	if len(s.reservations) > 0 {
-		lastID = s.reservations[len(s.reservations)-1].ID
-	}
+	reservationID := hashReservationID(len(s.reservations))
 
 	reserv := Reservation{
-		ID:        hashReservationID(lastID, roomID),
+		ID:        reservationID,
 		RoomID:    roomID,
 		Start:     start,
 		End:       end,
 		Cancelled: false,
 	}
-	s.reservations = append(s.reservations, reserv)
+	s.reservations[reservationID] = reserv
 
 	return reserv, nil
 }
 
-func hashReservationID(lastID, roomID string) string {
-	sum := sha256.Sum256(append([]byte(lastID), []byte(roomID)...))
-	return hex.EncodeToString(sum[:])
+func hashReservationID(countReservations int) string {
+	countReservations++
+	return strconv.Itoa(countReservations)
 }
