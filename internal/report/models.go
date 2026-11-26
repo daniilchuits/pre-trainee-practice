@@ -22,6 +22,5 @@ type CSVExporter struct {
 var (
 	JsonMarshaling error = errors.New("Error marshaling json")
 	CsvMarshling   error = errors.New("Error marshaling csv")
+	WrongExporter  error = errors.New("Wrong exporter")
 )
-
-func RenderAll(records []Record, exporters []Exporter) (map[string][]byte, error)

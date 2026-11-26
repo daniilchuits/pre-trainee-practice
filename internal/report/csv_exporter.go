@@ -15,7 +15,10 @@ func (c CSVExporter) Export(records []Record) ([]byte, error) {
 
 	var buf bytes.Buffer
 	w := csv.NewWriter(&buf)
-	sep := c.separator()
+	sep, ok := CommaOF(c)
+	if !ok {
+		return nil, fmt.Errorf("%w: must be CSVExporter", WrongExporter)
+	}
 
 	if err := w.Write([]string{
 		"sku",
@@ -50,11 +53,4 @@ func (c CSVExporter) Export(records []Record) ([]byte, error) {
 		return nil, err
 	}
 	return buf.Bytes(), nil
-}
-
-func (c CSVExporter) separator() rune {
-	if c.Comma == 0 {
-		return ','
-	}
-	return c.Comma
 }
