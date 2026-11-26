@@ -1,5 +1,7 @@
 package report
 
+import "errors"
+
 type Record struct {
 	SKU        string
 	Qty        int
@@ -16,5 +18,10 @@ type JSONExporter struct{}
 type CSVExporter struct {
 	Comma rune // if 0, use ','
 }
+
+var (
+	JsonMarshaling error = errors.New("Error marshaling json")
+	CsvMarshling   error = errors.New("Error marshaling csv")
+)
 
 func RenderAll(records []Record, exporters []Exporter) (map[string][]byte, error)
