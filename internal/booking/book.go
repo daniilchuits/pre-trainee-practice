@@ -3,6 +3,7 @@ package booking
 import (
 	"crypto/sha256"
 	"encoding/hex"
+	"fmt"
 )
 
 const (
@@ -21,7 +22,7 @@ func (s *Service) Book(roomID string, start, end int) (Reservation, error) {
 	}
 
 	if !found {
-		return Reservation{}, ErrNotFound
+		return Reservation{}, fmt.Errorf("Error %w: room-id=%s", ErrNotFound, roomID)
 	}
 
 	if dayStart > start || start > end || end > dayEnd {
@@ -31,7 +32,10 @@ func (s *Service) Book(roomID string, start, end int) (Reservation, error) {
 	for _, reserv := range s.reservations {
 		if roomID == reserv.RoomID && !reserv.Cancelled {
 			if reserv.Start < end && start < reserv.End {
-				return Reservation{}, ErrConflict
+				return Reservation{}, fmt.Errorf(
+					"Error %w with reservation-id=%s",
+					ErrConflict, reserv.ID,
+				)
 			}
 		}
 	}
