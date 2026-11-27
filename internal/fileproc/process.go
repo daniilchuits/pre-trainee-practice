@@ -21,7 +21,8 @@ func Process(paths []string) []Result {
 
 func processFile(path string) (res Result) {
 
-	res.Path = path
+	pathParts := strings.Split(path, "/")
+	res.Path = pathParts[len(pathParts)-1]
 
 	defer func() {
 		if r := recover(); r != nil {
@@ -32,6 +33,9 @@ func processFile(path string) (res Result) {
 
 	f, err := os.Open(path)
 	if err != nil {
+		if os.IsNotExist(err) {
+			err = fmt.Errorf("%w: %s", NotExists, path)
+		}
 		res.Err = err
 		return res
 	}
@@ -43,6 +47,14 @@ func processFile(path string) (res Result) {
 		return res
 	}
 
+	lines := strings.Split(string(b), "\n")
+	if len(lines) > 0 {
+		firstLine := strings.TrimSpace(lines[0])
+		if firstLine == invalidFirstLine { // exact math, not strings.HasPrefix
+			panic("fileproc: boom")
+		}
+	}
+
 	res.Bytes = len(b)
 
 	res.Lines = bytes.Count(b, []byte{'\n'})
@@ -51,12 +63,5 @@ func processFile(path string) (res Result) {
 		res.Lines++
 	}
 
-	lines := strings.Split(string(b), "\n")
-	if len(lines) > 0 {
-		firstLine := strings.TrimSpace(lines[0])
-		if firstLine == invalidFirstLine { // exact math, not strings.HasPrefix
-			panic("fileproc: boom")
-		}
-	}
 	return res
 }

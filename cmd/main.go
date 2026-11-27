@@ -1,21 +1,21 @@
 package main
 
 import (
-	"log"
+	"fmt"
 
-	"github.com/daniilchuits/pre-trainee-practice/internal/report"
+	"github.com/daniilchuits/pre-trainee-practice/internal/fileproc"
 )
 
 func main() {
 
-	recs := []report.Record{{SKU: "qwe", Qty: 1, PriceCents: 5}}
-	_ = recs
+	results := fileproc.Process([]string{
+		"testdata/fileproc/ok.txt",
+		"testdata/fileproc/missing.txt",
+		"testdata/fileproc/panic.txt",
+		"testdata/fileproc/empty.txt",
+	})
 
-	j1 := report.JSONExporter{}
-
-	b, err := j1.Export(nil)
-	if err != nil {
-		log.Fatal(err)
+	for i := range results {
+		fmt.Printf("№%d | %v\n", i+1, results[i])
 	}
-	log.Println(string(b))
 }
