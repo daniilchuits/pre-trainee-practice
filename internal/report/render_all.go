@@ -33,7 +33,7 @@ func RenderAll(records []Record, exporters []Exporter) (map[string][]byte, error
 		} else {
 
 			if foundCsv {
-				return nil, errors.New("Two csv exporters")
+				return nil, errors.New("Two csv exporterss")
 			}
 			jsonBytes, err := ex.Export(records)
 			if err != nil {
