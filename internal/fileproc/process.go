@@ -1,11 +1,14 @@
 package fileproc
 
 import (
+	"bytes"
 	"fmt"
 	"io"
 	"os"
 	"strings"
 )
+
+const invalidFirstLine = "PANIC"
 
 func Process(paths []string) []Result {
 
@@ -16,9 +19,10 @@ func Process(paths []string) []Result {
 	return results
 }
 
-func processFile(path string) Result {
+func processFile(path string) (res Result) {
 
-	res := Result{}
+	res.Path = path
+
 	defer func() {
 		if r := recover(); r != nil {
 			res.Panicked = true
@@ -28,24 +32,29 @@ func processFile(path string) Result {
 
 	f, err := os.Open(path)
 	if err != nil {
-		return Result{Err: err}
+		res.Err = err
+		return res
 	}
 	defer f.Close()
 
 	b, err := io.ReadAll(f)
 	if err != nil {
-		return Result{Err: err}
+		res.Err = err
+		return res
 	}
 
 	res.Bytes = len(b)
 
+	res.Lines = bytes.Count(b, []byte{'\n'})
+
+	if len(b) > 0 && b[len(b)-1] != '\n' {
+		res.Lines++
+	}
+
 	lines := strings.Split(string(b), "\n")
-
-	res.Lines = len(lines)
-
 	if len(lines) > 0 {
 		firstLine := strings.TrimSpace(lines[0])
-		if strings.HasPrefix(firstLine, "PANIC") {
+		if firstLine == invalidFirstLine { // exact math, not strings.HasPrefix
 			panic("fileproc: boom")
 		}
 	}
